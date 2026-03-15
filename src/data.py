@@ -11,10 +11,12 @@ true["label"] = 1
 # combine datasets
 data = pd.concat([fake, true])
 
+data=data.sample(frac=1).reset_index(drop=True)
 # keep only required columns
-data = data[["text", "label"]]
+# data = data[["text", "label"]]
 
-# save new dataset
-data.to_csv("data/news.csv", index=False)
+# # save new dataset
+# data.to_csv("data/news.csv", index=False)
 
-print("Dataset prepared successfully")
+# print("Dataset prepared successfully")
+

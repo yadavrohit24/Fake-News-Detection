@@ -13,7 +13,7 @@ X = data["text"]
 y = data["label"]
 
 # convert text to numbers
-vectorizer = TfidfVectorizer(stop_words="english")
+vectorizer = TfidfVectorizer(stop_words="english",max_df=0.7)
 
 X = vectorizer.fit_transform(X)
 
