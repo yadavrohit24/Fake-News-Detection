@@ -36,3 +36,5 @@ print("Accuracy:", accuracy)
 # save model
 pickle.dump(model, open("models/model.pkl", "wb"))
 pickle.dump(vectorizer, open("models/vectorizer.pkl", "wb"))
+
+print(data["label"].value_counts())
