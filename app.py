@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 
+# load model
 model = pickle.load(open("models/model.pkl", "rb"))
 vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
 
@@ -14,6 +15,6 @@ if st.button("Predict"):
     result = model.predict(vec)
 
     if result[0] == 0:
-        st.write("Fake News")
+        st.error("Fake News")
     else:
-        st.write("Real News")
+        st.success("Real News")
