@@ -1,98 +1,122 @@
 # Fake News Detection System
 
-## Project Overview
+A lightweight fake news classifier built with TF-IDF and Logistic Regression, plus a simple Streamlit UI for predictions.
 
-This project detects whether a news article is **Fake** or **Real** using **Machine Learning and Natural Language Processing (NLP)** techniques.
+## Highlights
 
-The system analyzes the text of news articles and predicts whether the news is fake or real using a trained machine learning model.
-
----
-
-## Features
-
-* Detects Fake and Real News
-* Machine Learning based text classification
-* Simple Web Interface
-* Fast prediction using trained model
-
----
-
-## Technologies Used
-
-* Python
-* Pandas
-* Scikit-learn
-* TF-IDF Vectorizer
-* Logistic Regression
-* Streamlit
-
----
+- Text classification with TF-IDF features
+- Logistic Regression baseline model
+- Fast local inference via Streamlit
+- Simple data preparation script
 
 ## Project Structure
 
+
 Fake-News-Detection
-│
-├── data
-│ ├── Fake.csv
-│ └── True.csv
-│
-├── models
-│ ├── model.pkl
-│ └── vectorizer.pkl
-│
-├── src
-│ ├── data.py
-│ └── model.py
-│
 ├── app.py
+├── data
+│   ├── Fake.csv
+│   ├── True.csv
+│   └── news.csv
+├── models
+│   ├── model.pkl
+│   └── vectorizer.pkl
 ├── requirements.txt
-└── README.md
+├── README.md
+└── src
+    ├── data.py
+    └── model.py
 
----
 
-## Installation
+## Requirements
 
-Install required libraries:
+- Python 3.8+
+- The packages in requirements.txt
 
+Install dependencies:
+
+bash
 pip install -r requirements.txt
 
----
 
-## Run the Project
+## Data
 
-Train the model:
+This project expects two raw CSV files:
 
+- data/Fake.csv
+- data/True.csv
+
+The preparation script src/data.py:
+
+- Adds labels (0 for fake, 1 for real)
+- Concatenates and shuffles the data
+- Optionally saves a combined dataset to data/news.csv
+
+To generate data/news.csv, open src/data.py and ensure the following lines are uncommented:
+
+- data = data[["text", "label"]]
+- data.to_csv("data/news.csv", index=False)
+
+Then run:
+
+bash
+python src/data.py
+
+
+## Training
+
+Train the model with:
+
+bash
 python src/model.py
 
-Run the web application:
 
+This script will:
+
+- Load data/news.csv
+- Fit a TfidfVectorizer
+- Train a LogisticRegression model
+- Print accuracy on a held-out test set
+- Save artifacts to:
+  - models/model.pkl
+  - models/vectorizer.pkl
+
+If the models/ folder does not exist, create it before training:
+
+bash
+mkdir -p models
+
+
+## Run the App
+
+Start the Streamlit UI:
+
+bash
 streamlit run app.py
 
----
 
-## Usage
+Enter a news article and click *Predict* to classify it as Fake or Real.
 
-1. Enter news text in the input box
-2. Click **Predict**
-3. The system will classify the news as **Fake News** or **Real News**
+## Notes on Accuracy
 
----
+Reported accuracy depends on the dataset and split. The README does not guarantee a specific accuracy value. Re-run training to validate on your environment and data.
 
-## Model Used
+## Troubleshooting
 
-Logistic Regression with TF-IDF feature extraction.
+- FileNotFoundError: data/news.csv
+  - Run python src/data.py after confirming Fake.csv and True.csv exist.
+- FileNotFoundError: models/model.pkl
+  - Run python src/model.py to train and save the model.
+- ModuleNotFoundError
+  - Reinstall dependencies with pip install -r requirements.txt.
 
-Accuracy: ~95%+
+## Future Ideas
 
----
+- Add preprocessing like lowercasing, lemmatization, and URL removal
+- Evaluate with precision, recall, and F1
+- Add model persistence versioning
+- Try transformer-based models (e.g., BERT)
 
-## Future Improvements
+## Author
 
-* Deep Learning models (LSTM / BERT)
-* More datasets for better accuracy
-* Improved UI design
-
----
-
-## 👨‍💻 Author
 Rohit Yadav
